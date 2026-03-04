@@ -254,5 +254,8 @@
 - [x] 19.28 Style labels with predefined color palette (purple, green, yellow, orange, red, blue)
 - [x] 19.29 Add members section to card with avatar display
 - [x] 19.30 Implement file upload for attachments with progress indicator
-- [x] 19.31 Compile CSS and test all new features- [x] 19.32 Fix checklist counter real-time update: add updateCardChecklistDisplay() function to sync board view when checklist items are toggled in modal
+- [x] 19.31 Compile CSS and test all new features
+- [x] 19.32 Fix checklist counter real-time update: add updateCardChecklistDisplay() function to sync board view when checklist items are toggled in modal
 - [x] 19.33 Add checklist-counter CSS class to card-item.blade.php for JavaScript targeting of checklist display
+- [x] 19.34 Fix card drag-and-drop between lists: update CardController move method to load relationships, validate same-board constraint, and calculate proper position in destination list
+- [x] 19.35 Fix empty list drop zone: add min-height (100px) to drop zone and "Drop cards here" placeholder so cards can be dropped into empty lists
