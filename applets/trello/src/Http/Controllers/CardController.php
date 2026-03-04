@@ -97,13 +97,33 @@ class CardController
      */
     public function move(Card $card, \Illuminate\Http\Request $request)
     {
+        // Load relationships needed for authorization
+        $card->load('list.board');
+        
         $this->authorize('update', $card);
 
         $request->validate([
             'list_id' => 'required|exists:trello_lists,id',
         ]);
 
-        $card->update(['list_id' => $request->list_id]);
+        $destinationList = \Trello\Models\TrelloList::with('board')->findOrFail($request->list_id);
+        
+        // Ensure the destination list belongs to the same board
+        if ($card->list->board_id !== $destinationList->board_id) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Cannot move card to a different board.'
+            ], 403);
+        }
+
+        // Calculate new position (append to end of destination list)
+        $maxPosition = \Trello\Models\Card::where('list_id', $request->list_id)
+            ->max('position') ?? 0;
+
+        $card->update([
+            'list_id' => $request->list_id,
+            'position' => $maxPosition + 10
+        ]);
 
         return response()->json([
             'success' => true,
