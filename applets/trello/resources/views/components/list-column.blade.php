@@ -28,10 +28,13 @@
          ondragenter="handleDragEnter(event)"
          ondragleave="handleDragLeave(event)"
          ondrop="handleDrop(event, {{ $list->id }})"
-         style="max-height: 70vh;">
+         style="max-height: 70vh; min-height: 50px;">
         @forelse($list->cards->sortBy('position') as $card)
             @include('trello::components.card-item', ['card' => $card])
         @empty
+            <div class="text-center py-3 text-gray-400 text-xs">
+                Drop cards here
+            </div>
         @endforelse
     </div>
     
