@@ -71,6 +71,15 @@ class CardController
 
         $card = $this->cardService->updateCard($card, $request->validated());
 
+        // Return JSON for AJAX requests
+        if ($request->expectsJson() || $request->wantsJson()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Card updated successfully.',
+                'card' => $card
+            ]);
+        }
+
         $list = $card->list;
         return redirect()->route('boards.show', $list->board_id)
             ->with('success', 'Card updated successfully.');
